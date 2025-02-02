@@ -1,24 +1,36 @@
 {
   "name": "talk_summary",
-  "license": "0BSD",
+  "license": "MIT",
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "pkgAndroidDebug": "eas build --platform android --profile  development --local",
+    "pkgAndroidRelease": "eas build --platform android --profile production --local",
+    "pkgIosDebug": "eas build --platform ios --profile development --local",
+    "pkgIosRelease": "eas build --platform ios --profile production --local"
   },
   "dependencies": {
+    "buffer": "^6.0.3",
     "expo": "~52.0.28",
+    "expo-av": "~15.0.2",
     "expo-status-bar": "~2.0.1",
+    "ffmpeg-kit-react-native": "^6.0.2",
     "react": "18.3.1",
-    "react-native": "0.76.6"
+    "react-native": "0.76.6",
+    "react-native-audio-recorder-player": "^3.6.12",
+    "whisper.rn": "^0.3.9"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/react": "~18.3.12",
-    "typescript": "^5.3.3"
+    "@types/react-native": "^0.73.0",
+    "@types/ws": "^8.5.14",
+    "typescript": "^5.3.3",
+    "@react-native-community/cli": "latest"
   },
   "private": true
 }
