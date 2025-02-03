@@ -32,6 +32,9 @@ yarn-error.*
 # apk
 *.apk
 
+# model
+assets/model/
+
 # local env files
 .env*.local
 

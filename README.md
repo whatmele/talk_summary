@@ -61,6 +61,11 @@ yarn ios
 - `whisper.rn`
 - `ffmpeg-kit-react-native`
 
+## Model Download
+This project uses the whisper.cpp model, you can download the model from the following link:
+ https://huggingface.co/ggerganov/whisper.cpp/tree/main
+	
+
 ## Contributing
 
 Contributions are welcome! Please fork this repository and submit a pull request.
