@@ -8,6 +8,8 @@ This is a React Native application that performs ASR (Automatic Speech Recogniti
 - **Recording History**: View, play, and delete historical recordings.
 
 ## Directory Structure
+
+```
 .
 ├── components
 │ └── RootComponent.tsx
@@ -28,6 +30,7 @@ This is a React Native application that performs ASR (Automatic Speech Recogniti
 ## Installation
 
 1. Ensure you have [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/) installed.
+
 2. Clone this repository:
    ```bash
    git clone <repository-url>
