@@ -14,6 +14,9 @@
     "pkgIosRelease": "eas build --platform ios --profile production --local"
   },
   "dependencies": {
+    "@react-native-picker/picker": "^2.11.0",
+    "@react-navigation/bottom-tabs": "^7.2.0",
+    "@react-navigation/native": "^7.0.14",
     "buffer": "^6.0.3",
     "expo": "~52.0.28",
     "expo-av": "~15.0.2",
@@ -22,15 +25,17 @@
     "react": "18.3.1",
     "react-native": "0.76.6",
     "react-native-audio-recorder-player": "^3.6.12",
+    "react-native-safe-area-context": "^5.1.0",
+    "react-native-screens": "^4.6.0",
     "whisper.rn": "^0.3.9"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@react-native-community/cli": "latest",
     "@types/react": "~18.3.12",
     "@types/react-native": "^0.73.0",
     "@types/ws": "^8.5.14",
-    "typescript": "^5.3.3",
-    "@react-native-community/cli": "latest"
+    "typescript": "^5.3.3"
   },
   "private": true
 }

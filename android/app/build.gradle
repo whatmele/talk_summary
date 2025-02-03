@@ -6,6 +6,8 @@ def projectRoot = rootDir.getAbsoluteFile().getParentFile().getAbsolutePath()
 project.ext.react = [
     entryFile: "index.ts",
     bundleAssetName: "index.android.bundle",
+    bundleInBeta: true,
+    bundleInAlpha: true,
     bundleInDebug: true,   // 在 Debug 模式下打包 JS
     bundleInRelease: true, // 在 Release 模式下打包 JS
 ]
