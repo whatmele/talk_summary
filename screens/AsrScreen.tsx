@@ -21,6 +21,7 @@ const AsrScreen: React.FC = () => {
   const handleRecording = async () => {
     if (recording) {
       const resultWavUri = await stopRecording();
+      console.log('resultWavUri', resultWavUri);
       transcribeAudio(resultWavUri);
     } else {
       await startRecording();

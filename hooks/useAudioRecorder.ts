@@ -27,28 +27,27 @@ export const useAudioRecorder = () => {
   }, []);
 
   const getAudioRecordOptions = () => {
+    
     switch (audioRecordType) {
       case AudioRecordType.WAV:
+        // https://github.com/mybigday/whisper.rn/issues/195
         return {
             isMeteringEnabled: true,
             android: {
+              ...Audio.RecordingOptionsPresets.HIGH_QUALITY.android,
               extension: '.wav',
               outputFormat: AndroidOutputFormat.DEFAULT,
               audioEncoder: AndroidAudioEncoder.DEFAULT,
               sampleRate: 16000,
-              numberOfChannels: 1,
-              bitRate: 128000,
+              numberOfChannels: 1
             },
             ios: {
+              ...Audio.RecordingOptionsPresets.HIGH_QUALITY.ios,
               extension: '.wav',
               outputFormat: IOSOutputFormat.LINEARPCM,
               audioQuality: IOSAudioQuality.MAX,
               sampleRate: 16000,
-              numberOfChannels: 1,
-              bitRate: 128000,
-              linearPCMBitDepth: 16,
-              linearPCMIsBigEndian: false,
-              linearPCMIsFloat: false,
+              numberOfChannels: 1
             },
             web: {
               mimeType: 'audio/wav',
@@ -148,16 +147,11 @@ export const useAudioRecorder = () => {
           to: newUri,
         });
         console.log('Recording moved to', newUri);
-        if (audioRecordType === AudioRecordType.WAV) {
-            setRecordingUri(newUri);
-            resultUri = newUri;
-        } else {
-            const targetUri = `${newUri.replace('.' + audioRecordType, '')}_converted.wav`;
-            const convertResult = await convertToWav(newUri, targetUri);
-            if (convertResult) {
-              setRecordingUri(targetUri);
-              resultUri = targetUri;
-            }
+        const targetUri = `${newUri.replace('.' + audioRecordType, '')}_converted.wav`;
+        const convertResult = await convertToWav(newUri, targetUri);
+        if (convertResult) {
+            setRecordingUri(targetUri);
+            resultUri = targetUri;
         }
       }
     }
