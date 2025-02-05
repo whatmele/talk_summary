@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ASRScreen from '../screens/AsrScreen';
-import HistoryScreen from '../screens/HistoryScreen';
+import ASRScreen from './AsrScreen';
+import HistoryScreen from './HistoryScreen';
 import { useLoadWhisper, useWhisper, WhisperProvider } from '../context/WhisperContext';
 import { releaseAllWhisper } from 'whisper.rn';
 
