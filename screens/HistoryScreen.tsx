@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, FlatList, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import * as FileSystem from 'expo-file-system';
-import { Audio } from 'expo-av';
 import { useFocusEffect } from '@react-navigation/native';
+import { useAudioPlayer } from '../hooks/useAudioPlayer';
+import { AudioRecordType } from '../hooks/useAudioRecorder';
 
 const HistoryScreen: React.FC = () => {
   const [files, setFiles] = useState<{ name: string, format: string }[]>([]);
-  const [sound, setSound] = useState<Audio.Sound | null>(null);
+  const { stopPlayRecording, playRecording, sound } = useAudioPlayer();
 
   useFocusEffect(
     useCallback(() => {
@@ -22,25 +23,25 @@ const HistoryScreen: React.FC = () => {
     }, [sound])
   );
 
-  useEffect(() => {
-    return () => {
-        sound?.unloadAsync();
-    }
-  }, [sound]);
-
   const loadFiles = async () => {
     const fileNames = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory || '');
+
+    // 获取 AudioRecordType 枚举的所有值
+    const audioExtensions = Object.values(AudioRecordType);
+
+    // 过滤文件，确保只展示音频文件
     const audioFiles = fileNames
-      .filter(file => file.endsWith('.m4a') || file.endsWith('.wav')) // 只展示音频文件
+      .filter(file => audioExtensions.some(ext => file.endsWith(`.${ext}`)))
       .map(file => ({
         name: file,
         format: file.split('.').pop() ?? 'unknown',
       }));
+
     setFiles(audioFiles);
   };
 
   const deleteFile = async (fileName: string) => {
-    await FileSystem.deleteAsync(`${FileSystem.documentDirectory}${fileName}`);
+    await FileSystem.deleteAsync(fileName);
     loadFiles();
     Alert.alert('Deleted', `Recording ${fileName} has been deleted.`);
   };
@@ -50,19 +51,6 @@ const HistoryScreen: React.FC = () => {
       await FileSystem.deleteAsync(`${FileSystem.documentDirectory}${file.name}`);
     }
     loadFiles();
-  };
-
-  const playRecording = async (fileName: string) => {
-    const filePath = `${FileSystem.documentDirectory}${fileName}`;
-    const { sound } = await Audio.Sound.createAsync({ uri: filePath });
-    setSound(sound);
-    await sound.playAsync();
-  };
-
-  const stopPlayRecording = async () => {
-    if (sound) {
-      await sound.stopAsync();
-    }
   };
 
   return (
@@ -76,10 +64,10 @@ const HistoryScreen: React.FC = () => {
               {item.name}
             </Text>
             <Text style={styles.fileFormat}>{item.format}</Text>
-            <TouchableOpacity onPress={() => playRecording(item.name)} style={styles.button}>
+            <TouchableOpacity onPress={() => playRecording(`${FileSystem.documentDirectory}${item.name}`)} style={styles.button}>
               <Text style={styles.buttonText}>Play</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => deleteFile(item.name)} style={styles.button}>
+            <TouchableOpacity onPress={() => deleteFile(`${FileSystem.documentDirectory}${item.name}`)} style={styles.button}>
               <Text style={styles.buttonText}>Delete</Text>
             </TouchableOpacity>
           </View>
